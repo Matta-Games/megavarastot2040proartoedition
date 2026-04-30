@@ -29,6 +29,12 @@ public class ButtonController : MonoBehaviour
     {
         if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
+            // fallback to singleton if FindObjectOfType failed
+            if (playerInv == null)
+            {
+                playerInv = PlayerInventory.Instance;
+            }
+
             chest.Open(playerInv);
         }
     }

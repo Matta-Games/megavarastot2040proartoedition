@@ -7,18 +7,19 @@ public class ChestController : MonoBehaviour
 
     public void Open(PlayerInventory playerInv)
     {
+        // fallback to singleton if null is passed
         if (playerInv == null)
         {
-            return;
+            playerInv = PlayerInventory.Instance;
         }
+
+        if (playerInv == null)
+            return;
 
         if (playerInv.HasKey(requiredKeyID))
         {
             chestAnimator.SetTrigger("Open");
             playerInv.RemoveKey();
-        }
-        else
-        {
         }
     }
 }
