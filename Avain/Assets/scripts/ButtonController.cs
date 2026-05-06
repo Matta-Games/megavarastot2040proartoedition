@@ -3,16 +3,13 @@ using UnityEngine;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField] private ChestController chest;
-
-    private PlayerInventory playerInv;
-    private bool playerNearby = false;
+    private bool chestNearby = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Chest"))
         {
-            playerNearby = true;
-            playerInv = FindObjectOfType<PlayerInventory>();
+            chestNearby = true;
         }
     }
 
@@ -20,22 +17,15 @@ public class ButtonController : MonoBehaviour
     {
         if (other.CompareTag("Chest"))
         {
-            playerNearby = false;
-            playerInv = null;
+            chestNearby = false;
         }
     }
 
     void Update()
     {
-        if (playerNearby && Input.GetKeyDown(KeyCode.E))
+        if (chestNearby && Input.GetKeyDown(KeyCode.E))
         {
-            // fallback to singleton if FindObjectOfType failed
-            if (playerInv == null)
-            {
-                playerInv = PlayerInventory.Instance;
-            }
-
-            chest.Open(playerInv);
+            chest.Open();
         }
     }
 }
